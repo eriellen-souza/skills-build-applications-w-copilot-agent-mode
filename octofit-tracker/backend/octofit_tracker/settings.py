@@ -12,7 +12,13 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'replace-me-with-secure-key')
 DEBUG = os.environ.get('DJANGO_DEBUG', '1') == '1'
 
 
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',')
+
+# Permitir hosts do Codespaces e localhost
+codespace_name = os.environ.get('CODESPACE_NAME')
+allowed_hosts = ['localhost', '127.0.0.1']
+if codespace_name:
+    allowed_hosts.append(f'{codespace_name}-8000.app.github.dev')
+ALLOWED_HOSTS = allowed_hosts
 
 # CORS settings: permitir tudo
 CORS_ALLOW_ALL_ORIGINS = True
