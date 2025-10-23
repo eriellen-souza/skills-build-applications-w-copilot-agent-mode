@@ -1,11 +1,15 @@
-from django.urls import path
-from django.http import HttpResponse
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from . import views
 
-
-def health(request):
-    return HttpResponse('OK')
-
+router = DefaultRouter()
+router.register(r'users', views.UserViewSet, basename='user')
+router.register(r'teams', views.TeamViewSet, basename='team')
+router.register(r'activities', views.ActivityViewSet, basename='activity')
+router.register(r'workouts', views.WorkoutViewSet, basename='workout')
+router.register(r'leaderboards', views.LeaderboardViewSet, basename='leaderboard')
 
 urlpatterns = [
-    path('', health, name='health'),
+    path('', views.api_root, name='api-root'),
+    path('api/', include(router.urls)),
 ]

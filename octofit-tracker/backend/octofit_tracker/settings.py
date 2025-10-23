@@ -11,7 +11,16 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'replace-me-with-secure-key')
 
 DEBUG = os.environ.get('DJANGO_DEBUG', '1') == '1'
 
+
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',')
+
+# CORS settings: permitir tudo
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = ['*']
+CORS_ALLOW_METHODS = ['DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST', 'PUT']
+# Para compatibilidade com versões antigas do django-cors-headers
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -22,9 +31,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'djongo',
+    'octofit_tracker',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
